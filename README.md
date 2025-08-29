@@ -28,7 +28,7 @@ jupyter-lab --no-browser --ip=* --port 8990
 
 ```
 
-Then Open Tutorial_pancreas.ipynb and select the hormone2cell_env kernel to run the tutorial. **Further explanations and detailed usage of the tools are provided in this notebook.**
+Then Open Tutorial_pancreas.ipynb and select the hormone2cell_env kernel to run the tutorial. **Further explanations and detailed usage of the tool is provided in this notebook.**
 
 
 ## Citation
