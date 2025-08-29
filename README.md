@@ -11,7 +11,7 @@ conda create -n hormone2cell_env python=3.10 -y
 conda activate hormone2cell_env
 
 # Clone repository
-git clone https://github.com/Teichlab/hormone2cell.git
+git clone https://github.com/Teichlab/hormone2cell.git # Alternatively, download the package via Code → Download ZIP and install it locally. A pip source of the package will be available soon.
 cd hormone2cell
 
 # Install in editable mode
@@ -27,7 +27,8 @@ python -m ipykernel install --user --name hormone2cell_env --display-name "hormo
 jupyter-lab --no-browser --ip=* --port 8990
 
 ```
-Then Open Tutorial_pancreas.ipynb and select the hormone2cell_env kernel to run the tutorial. Further explanations and detailed usage of the tools are provided in this notebook.
+
+Then Open Tutorial_pancreas.ipynb and select the hormone2cell_env kernel to run the tutorial. **Further explanations and detailed usage of the tools are provided in this notebook.**
 
 
 ## Citation
