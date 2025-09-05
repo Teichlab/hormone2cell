@@ -7,7 +7,8 @@ setup(
     url='https://github.com/Teichlab/hormone2cell',
     packages=find_packages(exclude=['docs', 'notebooks']),
     install_requires=[
-        'scanpy'
+        'scanpy',
+        'matplotlib-venn'
     ],
     package_data={
         "hormone2cell": ["*.pkl","*.h5ad"]
