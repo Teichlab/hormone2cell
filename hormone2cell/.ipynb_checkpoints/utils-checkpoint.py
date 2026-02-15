@@ -15,10 +15,7 @@ def AND_logic(df, and_genes):
     """Vectorized AND logic with gene exclusions"""
     sub_df = df.loc[and_genes]
     exclude_genes = ['FDX1', 'FDXR', 'SLC18A1', 'SLC18A2'] ## 'PCSK1', 'PCSK2', 'CGA', 'TG', 'CYB5A'
-    exclude_genes=['FDX1','FDXR', 'SLC18A1', 'SLC18A2' ,'PCSK1', 'PCSK2', 'CGA', 
-    'CYB5A', 'SCG5','MBOAT4','RET','TPST1','TPST2',
-    'KL','KLB','RET'
-    ]
+    exclude_genes=['FDX1','FDXR', 'SLC18A1', 'SLC18A2' ,'PCSK1', 'PCSK2', 'CGA', 'CYB5A', 'SCG5']
     rows_to_drop = [g for g in exclude_genes if g in sub_df.index]
     
     if rows_to_drop:
@@ -772,67 +769,6 @@ def annotate_hormone_long(
 
 import pandas as pd
 
-# def replace_adjusted_rows(
-#     hormone_long1: pd.DataFrame,
-#     hormone_long_adj_coverage: pd.DataFrame,
-#     adjusted_hormones_coverage: dict,
-#     tissue_col:str,
-#     coverage_fraction: float = 1/3
-#     ) -> pd.DataFrame:
-#     """
-#     Completely replace rows in hormone_long1 with rows from hormone_long_adj_coverage
-#     for (Hormone, Tissue) pairs specified in adjusted_hormones_coverage.
-    
-#     If a hormone's adjusted tissues cover more than `coverage_fraction` of all tissues,
-#     then all tissues for that hormone will be replaced.
-
-#     If hormone_long_adj_coverage is empty, return hormone_long1 unchanged.
-#     """
-#     # If replacement table is empty → return original unchanged
-#     if hormone_long_adj_coverage is None:
-#         return hormone_long1.copy()
-
-#     # All unique tissues in the dataset
-#     all_tissues = hormone_long1[tissue_col].unique().tolist()
-#     n_total_tissues = len(all_tissues)
-
-#     # Expand adjusted_hormones_coverage according to coverage_fraction rule
-#     expanded_adjusted = {}
-#     print(f'    Hormones that have been adjusted includes: {adjusted_hormones_coverage.keys()}')
-#     for h, ts in adjusted_hormones_coverage.items():
-#         if len(ts) / n_total_tissues >= coverage_fraction:
-#             # replace all tissues for this hormone
-#             expanded_adjusted[h] = all_tissues
-#             #print(h)
-#         else:
-#             expanded_adjusted[h] = ts
-    
-#     # Build (Hormone, Tissue) pairs that need replacement
-#     pairs = pd.DataFrame(
-#         [(h, t) for h, ts in expanded_adjusted.items() for t in ts],
-#         columns=["Hormone", "Tissue"]
-#     )
-
-#     # Drop those pairs from original
-#     mask = hormone_long1.set_index(["Hormone", tissue_col]).index.isin(
-#         pairs.set_index(["Hormone","Tissue"]).index
-#     )
-#     hormone_long_new = hormone_long1.loc[~mask].copy()
-
-#     # Pick replacement rows from hormone_long_adj_coverage
-#     # hormone_long_adj_coverage.rename({tissue_col:'Tissue'})
-#     hormone_long_adj_coverage.rename(columns={tissue_col: "Tissue"}, inplace=True)
-#     print(hormone_long_adj_coverage.head(2))
-#     print(pairs.head(2))
-#     to_add = hormone_long_adj_coverage.merge(pairs, on=["Hormone", 'Tissue'], how="inner")
-
-#     # Concat back
-#     hormone_long_new = pd.concat([hormone_long_new, to_add], ignore_index=True)
-
-#     return hormone_long_new
-
-
-
 def replace_adjusted_rows(
     hormone_long1: pd.DataFrame,
     hormone_long_adj_coverage: pd.DataFrame,
@@ -871,29 +807,26 @@ def replace_adjusted_rows(
     # Build (Hormone, Tissue) pairs that need replacement
     pairs = pd.DataFrame(
         [(h, t) for h, ts in expanded_adjusted.items() for t in ts],
-        columns=["Hormone", tissue_col]
+        columns=["Hormone", "Tissue"]
     )
 
     # Drop those pairs from original
     mask = hormone_long1.set_index(["Hormone", tissue_col]).index.isin(
-        pairs.set_index(["Hormone",tissue_col]).index
+        pairs.set_index(["Hormone","Tissue"]).index
     )
     hormone_long_new = hormone_long1.loc[~mask].copy()
 
     # Pick replacement rows from hormone_long_adj_coverage
     # hormone_long_adj_coverage.rename({tissue_col:'Tissue'})
-    #hormone_long_adj_coverage.rename(columns={tissue_col: "Tissue"}, inplace=True)
-    print('------hormone_long_adj_coverage-------')
+    hormone_long_adj_coverage.rename(columns={tissue_col: "Tissue"}, inplace=True)
     print(hormone_long_adj_coverage.head(2))
-    print('------pairs-------')
     print(pairs.head(2))
-    to_add = hormone_long_adj_coverage.merge(pairs, on=["Hormone", tissue_col], how="inner")
+    to_add = hormone_long_adj_coverage.merge(pairs, on=["Hormone", 'Tissue'], how="inner")
 
     # Concat back
     hormone_long_new = pd.concat([hormone_long_new, to_add], ignore_index=True)
 
     return hormone_long_new
-
 
 
 def calculate_hormone_strength(
@@ -1285,7 +1218,6 @@ def calculate_hormone_strength_specificity(
             adjusted_hormones=adjusted_hormones_specificity.keys()
             mask=hormone_producing['hormone_short'].isin(adjusted_hormones)
             hormone_producing1=hormone_producing.loc[mask]
-            max_expression_file_adj='Adjustment_' +max_expression_file
             hormone_wide_adj_specificity = calculate_hormone_strength(
                 ave_all=ave_all,
                 hormone_producing=hormone_producing1,
@@ -1299,7 +1231,7 @@ def calculate_hormone_strength_specificity(
                 thresh_included=thresh_included_adjusted,
                 thresh_excluded=thresh_excluded_adjusted,
                 use_precomputed=use_precomputed,
-                max_expression_file=max_expression_file_adj
+                max_expression_file=max_expression_file
             )
             ## wide to long
             hormone_long_adj_coverage=reshape_hormone_wide(hormone_wide_adj_specificity,
@@ -1330,7 +1262,6 @@ def calculate_hormone_strength_specificity(
             adjusted_hormones=adjusted_hormones_coverage.keys()
             mask=hormone_producing['hormone_short'].isin(adjusted_hormones)
             hormone_producing1=hormone_producing.loc[mask]
-            max_expression_file_adj='Adjustment_' +max_expression_file
             hormone_wide_adj_coverage = calculate_hormone_strength(
                 ave_all=ave_all,
                 hormone_producing=hormone_producing1,
@@ -1344,7 +1275,7 @@ def calculate_hormone_strength_specificity(
                 thresh_included=thresh_included_adjusted,
                 thresh_excluded=thresh_excluded_adjusted,
                 use_precomputed=use_precomputed,
-                max_expression_file=max_expression_file_adj
+                max_expression_file=max_expression_file
             )
             hormone_long_adj_coverage=reshape_hormone_wide(hormone_wide_adj_coverage,
                                                           celltype_column =celltype_column,
@@ -1393,8 +1324,8 @@ def calculate_hormone_strength_specificity(
             'adm': 'adm_all',
             'adm2': 'adm_all',
         
-            'cgrp_alpha': 'cgrp_all',
-            'cgrp_beta': 'cgrp_all',
+            'cgrp_1': 'cgrp_all',
+            'cgrp_2': 'cgrp_all',
         
             'csh1': 'csh_all',
             'csh2': 'csh_all',
@@ -1434,10 +1365,7 @@ def calculate_hormone_strength_specificity(
         hormone_long_new_replace2=hormone_long_new_replace.loc[~mask].copy()
         hormone_long_new_replace=pd.concat([hormone_long_new_replace1,hormone_long_new_replace2])
         hormone_long_new_replace = hormone_long_new_replace.drop_duplicates()
-        hormone_long_new_replace = (
-            hormone_long_new_replace.sort_values('Strength', ascending=False).drop_duplicates(subset=['Hormone', celltype_column], keep='first'))
-
-        #print(hormone_long_new_replace.head(2))
+        print(hormone_long_new_replace.head(2))
         ## for pro-hormones and mature hormones, use the intersection for mature hormones
         # hormone_prohormone_dict={
             
@@ -1480,23 +1408,11 @@ def calculate_hormone_strength_specificity(
             # Find rows for the corresponding pro-hormone
             mask = hormone_long_new_replace['Hormone'].isin([hormone_prohormone_dict[hormone]])
             hormone_long_new_replace2 = hormone_long_new_replace.loc[mask].copy()
-
-
-
-            # check if pro-hormone exists or not?
-            if not hormone_long_new_replace2.empty:
-                # if exists, for mature hormones, only keep the rows that also appear in pro-hormones
-                mask = hormone_long_new_replace1[celltype_column].isin(hormone_long_new_replace2[celltype_column])
-                pairs = hormone_long_new_replace1.loc[mask]
-            else:
-                # if not, keep the mature hormone columns.
-                pairs = hormone_long_new_replace1
+            
+            # Find mature hormone rows with Celltype_tissue that also exist in pro-hormone data
+            mask = hormone_long_new_replace1['Celltype_unique'].isin(hormone_long_new_replace2['Celltype_unique'])
+            pairs = hormone_long_new_replace1.loc[mask]
             holder_mature.append(pairs)
-
-            # # Find mature hormone rows with Celltype_tissue that also exist in pro-hormone data
-            # mask = hormone_long_new_replace1['Celltype_unique'].isin(hormone_long_new_replace2['Celltype_unique'])
-            # pairs = hormone_long_new_replace1.loc[mask]
-            # holder_mature.append(pairs)
         
         # Combine all matching mature hormone rows
         if holder_mature:
