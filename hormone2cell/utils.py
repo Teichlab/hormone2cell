@@ -697,7 +697,7 @@ def annotate_hormone_long(
     hormone_long : pd.DataFrame
         Long-format dataframe with at least columns ['Hormone','Celltype_unique','Strength'].
     hormone_producing : pd.DataFrame
-        Reference dataframe with columns ['hormone_display','hormone_short','hormone_full','Tier'].
+        Reference dataframe with columns ['hormone_display','hormone_short','hormone_figures','Tier'].
     assay : str, optional
         If provided, add a column 'assay' with this value.
 
@@ -1562,7 +1562,7 @@ def calculate_hormone_strength_specificity(
 #         values are average expression.
 #     hormone_producing : pd.DataFrame
 #         Annotation table containing at least the key 'hormone_short' and
-#         optionally 'hormone_display', 'hormone_full', 'Tier'.
+#         optionally 'hormone_display', 'hormone_figures', 'Tier'.
 #     assay : Optional[str], default None
 #         If provided, a constant 'assay' column will be added to the output.
 
@@ -1579,7 +1579,7 @@ def calculate_hormone_strength_specificity(
 #     hormone_long = hormone_long.loc[hormone_long['AveExpression']>0]
     
 #     ## annotate Hormone
-#     hormone_ct_long = pd.merge(hormone_long,hormone_producing.loc[:,['hormone_display','hormone_short','hormone_full','Tier']],
+#     hormone_ct_long = pd.merge(hormone_long,hormone_producing.loc[:,['hormone_display','hormone_short','hormone_figures','Tier']],
 #                                left_on='Hormone',right_on='hormone_short',how='left')
 
 #     ## remove duplicates as some hormones in hormone2cell have several defination of hormone production.

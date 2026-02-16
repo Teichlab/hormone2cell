@@ -54,7 +54,7 @@ def hormone_strength(
         also contain `tissue_col`.
     geneset_definition : pd.DataFrame
         Hormone definition/annotation table. Must contain 'hormone_short';
-        may optionally include 'hormone_display', 'hormone_full', 'Tier'.
+        may optionally include 'hormone_display', 'hormone_figures', 'Tier'.
         Columns listed in `include_cols` / `exclude_cols` should hold gene IDs.
     celltype_column : str, default "Celltype_unique"
         Column name identifying cell types.
@@ -84,7 +84,7 @@ def hormone_strength(
     pd.DataFrame
         Long-form DataFrame with columns like:
         ['Hormone', <celltype_column>, 'Strength', 'hormone_short',
-         'hormone_display', 'hormone_full', 'Tier', 'assay'(optional)].
+         'hormone_display', 'hormone_figures', 'Tier', 'assay'(optional)].
         'Strength' is derived from the wide matrix’s values.
     """
     # get the gene names
