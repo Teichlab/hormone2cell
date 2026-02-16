@@ -8,7 +8,7 @@ from typing import Optional
 
 def hormone_strength(
     ave_all: pd.DataFrame,
-    hormone_producing: pd.DataFrame,
+    geneset_definition: pd.DataFrame,
     celltype_column: str = "Celltype_unique",
     tissue_col: Optional[str] ="Tissue",
     adjustment: bool = True,
@@ -52,7 +52,7 @@ def hormone_strength(
         Input table used by downstream steps. Must contain at least the
         column named by `celltype_column`; if `adjustment=True`, it must
         also contain `tissue_col`.
-    hormone_producing : pd.DataFrame
+    geneset_definition : pd.DataFrame
         Hormone definition/annotation table. Must contain 'hormone_short';
         may optionally include 'hormone_display', 'hormone_full', 'Tier'.
         Columns listed in `include_cols` / `exclude_cols` should hold gene IDs.
@@ -88,6 +88,7 @@ def hormone_strength(
         'Strength' is derived from the wide matrix’s values.
     """
     # get the gene names
+    hormone_producing=geneset_definition
     hormones_use = hormone_producing['hormone_short'].dropna().unique().tolist()
     all_included_genes, all_excluded_genes = collect_hormone_genes(
         hormone_producing=hormone_producing,
