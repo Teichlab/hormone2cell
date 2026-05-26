@@ -1,5 +1,5 @@
 """ calculate the hormone production and receiving strength in the datasets """
-__vesion__ = '1.0.0'
+__version__ = '1.0.0'
 __author__ = 'Lijiang Fei'
 
 from .utils import *
