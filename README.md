@@ -19,16 +19,8 @@ pip install -e .
 ```
 
 
-## Run example jupyternotebook using jupyter notebook
-```bash
-# Install Jupyter kernel and Launch JupyterLab
-pip install ipykernel
-python -m ipykernel install --user --name hormone2cell_env --display-name "hormone2cell_env"
-jupyter-lab --no-browser --ip=* --port 8990
+## Usage and Documentation
 
-```
-
-Then Open Tutorial_pancreas.ipynb and select the hormone2cell_env kernel to run the tutorial. **Further explanations and detailed usage of the tool is provided in this notebook.**
-
+Please refer to the [ReadTheDocs page](https://hormone2cell.readthedocs.io/en/latest/) for function docstrings and a tutorial notebook.
 
 ## Citation
