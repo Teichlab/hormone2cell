@@ -1,5 +1,28 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-#https://packaging.python.org/en/latest/guides/modernize-setup-py-project/
+[project]
+name = "hormone2cell"
+version = "0.1.1"
+description = "A toolkit for predicting hormone producing and receiving strength in single cell datasets."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Lijiang Fei", email = "lf529@cam.ac.uk" },
+    { name = "Krzysztof Polanski", email = "ktp27@cam.ac.uk" }
+]
+dependencies = [
+    "scanpy",
+    "matplotlib-venn"
+]
+
+[project.urls]
+Homepage = "https://github.com/Teichlab/hormone2cell"
+Repository = "https://github.com/Teichlab/hormone2cell"
+Issues = "https://github.com/Teichlab/hormone2cell/issues"
+
+[tool.setuptools.package-data]
+hormone2cell = ["*.pkl", "*.h5ad", "data/*.pkl", "data/*.h5ad"]
+#hormone2cell = ["*.pkl", "*.h5ad", "data/*.pkl", "data/*.h5ad", "data/**/*.pkl", "data/**/*.h5ad"]

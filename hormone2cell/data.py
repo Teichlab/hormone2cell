@@ -8,7 +8,7 @@ def load_hormone_producing_file():
     Load a hormone receptor data file (pickle format) packaged within the current module.
     """
     # Access the resource file within the current package and open it in binary mode
-    with importlib.resources.files(__package__).joinpath('HCA_Sub2_Table2C_hormones_v1.0.6_20260106.pkl').open("rb") as f:
+    with importlib.resources.files(__package__).joinpath('hormone_producing_definition_v2.0.0.pkl').open("rb") as f:
         # Use pandas to load the pickled object
         return pd.read_pickle(f)
 
@@ -18,7 +18,7 @@ def load_hormone_receptor_file():
     Load a hormone receptor data file (pickle format) packaged within the current module.
     """
     # Access the resource file within the current package and open it in binary mode
-    with importlib.resources.files(__package__).joinpath('HCA_Sub2_Table2D_receptors_v1.0.7_20260107.pkl').open("rb") as f:
+    with importlib.resources.files(__package__).joinpath('hormone_receptor_definition_v2.0.0.pkl').open("rb") as f:
         # Use pandas to load the pickled object
         return pd.read_pickle(f)
 
@@ -27,7 +27,7 @@ def load_hormone_file():
     Load a hormone data file (pickle format) packaged within the current module that contains all the hormone genes.
     """
     # Access the resource file within the current package and open it in binary mode
-    with importlib.resources.files(__package__).joinpath('Hormone_info_list_v1.0.7.pkl').open("rb") as f:
+    with importlib.resources.files(__package__).joinpath('hormone_receptor_info_list_v2.0.0.pkl').open("rb") as f:
         # Use pandas to load the pickled object
         return pd.read_pickle(f)
 
@@ -49,7 +49,7 @@ def load_precomputed_maxvalue(assay: str) -> pd.DataFrame:
         #file = 'HormoneCellAtlas_v3_max_value_cell.pkl'
         file = 'HormoneCellAtlas_v11_finegrained_max_value_cell.pkl'
     elif assay == 'nucleus':
-        #file = 'HormoneCellAtlas_v3_max_value_nucleus.pkl'  # 注意这里和 cell 对称
+        #file = 'HormoneCellAtlas_v3_max_value_nucleus.pkl'  
         file = 'HormoneCellAtlas_v11_finegrained_max_value_nucleus.pkl'
     else:
         raise ValueError("assay must be either 'cell' or 'nucleus'.")

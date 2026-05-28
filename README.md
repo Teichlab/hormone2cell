@@ -1,26 +1,75 @@
 # hormone2cell
-A toolkit for predicting hormone producing and receiving strength in single cell datasets.
 
+**A toolkit for predicting hormone producing and receiving strength in single cell datasets.**
+
+`hormone2cell` identifies hormone producing cell types (HPCs) and hormone receiving cell types (HRCs) from single-cell or single-nucleus expression data using a curated Hormone Receptor Reference Database. It applies cell-type-level expression filtering, multi-gene logic, and strength scoring to summarize predicted hormone production and reception across cell types.
+
+
+<p align="center">
+  <img src="docs/figures/hormone2cell_workflow_gptversion.png" alt="hormone2cell workflow" width="900">
+</p>
+
+<p align="center">
+  <em>Overview of the hormone2cell workflow, created with AI assistance.</em>
+</p>
 
 ## Installation
 
-```bash
+We recommend installing `hormone2cell` in a clean conda environment.
 
+### Install from PyPI
+
+```bash
+# Create and activate conda environment
+conda create -n hormone2cell_env python=3.10 -y
+conda activate hormone2cell_env
+
+# Install hormone2cell from PyPI
+pip install hormone2cell
+```
+
+### Install from GitHub for development
+
+If you want to install the latest development version from GitHub:
+
+```bash
 # Create and activate conda environment
 conda create -n hormone2cell_env python=3.10 -y
 conda activate hormone2cell_env
 
 # Clone repository
-git clone https://github.com/Teichlab/hormone2cell.git # Alternatively, download the package via Code → Download ZIP and install it locally. A pip source of the package will be available soon.
+git clone https://github.com/Teichlab/hormone2cell.git
 cd hormone2cell
 
 # Install in editable mode
 pip install -e .
 ```
 
+Alternatively, download the package via **Code → Download ZIP** from GitHub and install it locally:
+
+```bash
+cd hormone2cell
+pip install -e .
+```
 
 ## Usage and Documentation
 
-Please refer to the [ReadTheDocs page](https://hormone2cell.readthedocs.io/en/latest/) for function docstrings and a tutorial notebook.
+**Function docstrings and package documentation** are available on the [ReadTheDocs page](https://hormone2cell.readthedocs.io/en/latest/).
+
+
+**The detailed tutorial** is available as a [notebook](docs/Tutorial_pancreas.ipynb) and as a [rendered ReadTheDocs page](https://hormone2cell.readthedocs.io/en/latest/Tutorial_pancreas.html).
+
+
+The **Hormone-Receptor Reference Database**, including gene definitions for each hormone and receptor, is available from the [Hormone Cell Atlas download page](https://hormonecellatlas.org.uk/accounts/downloads/file/table-s2b/).
+
+## Other resources
+
+For hormone-centric analyses and visualization, please visit the [Hormone Cell Atlas website](https://hormonecellatlas.org.uk/).
+
+For the single-cell resource associated with this project, please visit the [Hormone Cell Atlas single-cell resource](https://hormonecellatlas.cellgeni.sanger.ac.uk/).
 
 ## Citation
+
+Citation information will be added once available.
+
+Parts of the method were informed by a previously published adaptive thresholding framework: [Nature Communications, 2024](https://www.nature.com/articles/s41467-024-46070-9).
