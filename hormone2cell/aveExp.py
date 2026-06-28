@@ -240,7 +240,7 @@ def compute_aveExp_by_category(
     #celltype_tissue_col='Celltype_tissue'
     adata = _map_celltype_tissue_to_cluster(adata, 'Celltype_tissue') 
 
-    # Quality control and normalization
+    # Quality control and normalization, this step needs to be ran before subsetting genes.
     sc.pp.filter_cells(adata, min_genes=100)
     sc.pp.normalize_total(adata, target_sum=10000)
 
