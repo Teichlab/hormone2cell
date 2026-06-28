@@ -240,6 +240,10 @@ def compute_aveExp_by_category(
     #celltype_tissue_col='Celltype_tissue'
     adata = _map_celltype_tissue_to_cluster(adata, 'Celltype_tissue') 
 
+    # Quality control and normalization
+    sc.pp.filter_cells(adata, min_genes=100)
+    sc.pp.normalize_total(adata, target_sum=10000)
+
     # subset to hormone related genes
     gene_dt=load_hormone_file()
     genes_use=gene_dt['Gene'].unique().tolist()
@@ -250,9 +254,7 @@ def compute_aveExp_by_category(
     else:
         raise ValueError("No hormone-related genes were found in the current AnnData object.")
 
-    # Quality control and normalization
-    #sc.pp.filter_cells(adata, min_genes=100)
-    sc.pp.normalize_total(adata, target_sum=10000)
+
 
     # Collect categories (e.g. ['cell'] or ['nucleus'])
     categories = list(pd.unique(adata.obs[sc_sn_col].astype(str)))
