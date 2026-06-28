@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: hormone2cell
-Version: 0.1.1
+Version: 0.1.2
 Summary: A toolkit for predicting hormone producing and receiving strength in single cell datasets.
 Home-page: https://github.com/Teichlab/hormone2cell
 Author: Lijiang Fei, Krzysztof Polanskiu
