@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hormone2cell"
-version = "0.1.1"
+version = "0.1.2"
 description = "A toolkit for predicting hormone producing and receiving strength in single cell datasets."
 readme = "README.md"
 requires-python = ">=3.10"
